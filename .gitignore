@@ -1,4 +1,4 @@
-# 保护API Key、Token等不被泄露!
+# Please take good care of your API Key and Token. For fund security, please do not disclose!  
 authorization.py
 # Byte-compiled / optimized / DLL files
 __pycache__/
