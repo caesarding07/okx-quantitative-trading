@@ -5,6 +5,7 @@
 # Please take good care of your API Key and Token. For fund security, please do not disclose!  
 API_KEY = 'API KEY'
 SECRET_KEY = 'SECRET KEY'
+PASSPHRASE = 'PASSPHRASE'
 
 # https://oapi.dingtalk.com/robot/send?access_token=******
 DINGDING_TOKEN = 'DING DING TOKEN'

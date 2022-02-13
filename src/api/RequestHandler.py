@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*
 # 封装参考:https://cloud.tencent.com/developer/article/1624558
-import datetime,requests
-import hmac
-import base64
+import datetime, requests, hmac, base64
 from hashlib import sha256
-from authorization import API_KEY,SECRET_KEY
+from authorization import API_KEY, SECRET_KEY, PASSPHRASE
 # 实盘交易地址
 BASE_URL = "https://www.okx.com"
 PUBLIC_URI = "wss://ws.okx.com:8443/ws/v5/public"
@@ -17,6 +15,7 @@ class RequestHandler:
         self.requests = requests
         self.secret_key = SECRET_KEY
         self.api_key = API_KEY
+        self.passphrase = PASSPHRASE
     def visit(self,method,path,params=None,data=None,json=None,headers=None,**kwargs):
         """request请求
         """
@@ -27,7 +26,7 @@ class RequestHandler:
     def _get_header(self,method,path,body):
         """设置REST请求头
         """
-        headers = {"Content-Type": "application/json","OK-ACCESS-KEY":self.api_key,"OK-ACCESS-PASSPHRASE":"try123"}
+        headers = {"Content-Type": "application/json","OK-ACCESS-KEY":self.api_key,"OK-ACCESS-PASSPHRASE":self.passphrase}
         # 时间戳
         ts = datetime.datetime.utcnow().isoformat("T", "milliseconds") + "Z"
         headers.update({"OK-ACCESS-TIMESTAMP":ts})
@@ -37,7 +36,7 @@ class RequestHandler:
         msg = str(ts) + str.upper(method) + path + str(body)
         headers.update({"OK-ACCESS-SIGN":self._sign(msg)})
         # 模拟盘
-        # headers.update({"x-simulated-trading": "1"})
+        headers.update({"x-simulated-trading": "1"})
         return headers
 
 
@@ -50,13 +49,12 @@ class RequestHandler:
         return signature
         
 if __name__ == "__main__" :
+    """测试: 获取所有交易对
+    """
     req = RequestHandler()
     test = req.visit("GET", "/api/v5/asset/currencies")
-    if test.status_code == 200:
-        print("请求成功")
-        print(test.text)
-    else:
-        print(test.status_code)
-        print(test.text)
+    print(test.status_code)
+    print(test.text)
+
 
     

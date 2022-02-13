@@ -2,10 +2,9 @@
 # https://www.ouyicn.help/docs-v5/en/#rest-api-trade
 # 交易API调用需要先进行身份验证
 # 限速: 60次/2s
-import RequestHandler
+from RequestHandler import RequestHandler
 
-RequestHandler.post("fff",{})
-RequestHandler.__sign("f")
+req = RequestHandler()
 
 class Trade(object):
     def buy_limit_cross(self,instrument,quantity,price):
