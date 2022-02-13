@@ -1,3 +1,5 @@
+# 保护API Key、Token等不被泄露!
+authorization.py
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
