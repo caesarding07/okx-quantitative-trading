@@ -3,7 +3,7 @@
 # 交易API调用需要先进行身份验证
 # 限速: 60次/2s
 from RequestHandler import RequestHandler
-
+import json
 req = RequestHandler()
 
 class Trade(object):
@@ -15,9 +15,9 @@ class Trade(object):
             quantity (String)): 数量
             price (String): 价格 
         """
-        path = "%s/trade/order" % self.BASE_URL
+        path = "/api/v5/trade/order"
         params = self._order(instrument, 'cross', 'buy', 'limit', quantity, price)
-        return self._post(path, params)
+        return req.visit('POST', path, json=json.dumps(params))
 
 ### ----私有函数---- ###
     def _order(self,instId,tdMode,side,ordType,sz,px=None):
@@ -45,3 +45,8 @@ class Trade(object):
             params['ordType'] = 'market'
 
         return params
+    
+if __name__ == "__main__":
+    trade = Trade()
+    print(trade.buy_limit_cross("BTC-USDT", "0.00008", "2000"))
+    print(trade.buy_limit_cross("BTC-USDT", "0.00008", "2000").text)

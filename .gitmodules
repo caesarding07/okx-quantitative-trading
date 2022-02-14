@@ -1,0 +1,3 @@
+[submodule "bundles"]
+	path = bundles
+	url = git@github.com:jane-cloud/Open-API-SDK-V5.git
